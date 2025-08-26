@@ -1,7 +1,14 @@
-package com.example.teendo.model;
+package com.gyorgy.teendofinal2.model;
 
+import jakarta.persistence.*;
+
+@Entity
 public class Teendo {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String cim;
     private String leiras;
     private boolean elvegzett;

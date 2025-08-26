@@ -1,7 +1,7 @@
-package com.example.teendo.controller;
+package com.gyorgy.teendofinal2.controller;
 
-import com.example.teendo.model.Teendo;
-import com.example.teendo.service.TeendoService;
+import com.gyorgy.teendofinal2.model.Teendo;
+import com.gyorgy.teendofinal2.service.TeendoService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

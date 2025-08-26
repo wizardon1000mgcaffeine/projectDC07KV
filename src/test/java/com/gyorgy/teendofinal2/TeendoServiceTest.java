@@ -1,6 +1,7 @@
 package com.example.teendo.service;
 
-import com.example.teendo.model.Teendo;
+import com.gyorgy.teendofinal2.model.Teendo;
+import com.gyorgy.teendofinal2.service.TeendoService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -11,11 +12,11 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class TeendoServiceTest {
 
-    private com.example.teendo.service.TeendoService service;
+    private TeendoService service;
 
     @BeforeEach
     void setUp() {
-        service = new com.example.teendo.service.TeendoService();
+        service = new TeendoService();
     }
 
     @Test
