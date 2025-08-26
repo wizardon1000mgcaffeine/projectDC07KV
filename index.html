@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <title>Teendőlista</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        h1 { color: #333; }
+        input, textarea { display: block; margin-bottom: 10px; padding: 5px; width: 300px; }
+        button { margin-top: 10px; padding: 8px 12px; }
+        .teendo { border: 1px solid #ccc; padding: 10px; margin-bottom: 10px; }
+    </style>
+</head>
+<body>
+<h1>📝 Teendőlista</h1>
+
+<h3>Új teendő hozzáadása</h3>
+<input id="cim" placeholder="Cím">
+<textarea id="leiras" placeholder="Leírás"></textarea>
+<label>
+    <input type="checkbox" id="elvegzett"> Elvégezve
+</label>
+<button onclick="ujTeendo()">➕ Hozzáadás</button>
+
+<h3>📋 Teendők</h3>
+<div id="teendok"></div>
+
+<script>
+    const API_URL = "/api/teendok";
+
+    function betoltTeendok() {
+        fetch(API_URL)
+            .then(res => res.json())
+            .then(data => {
+                const container = document.getElementById("teendok");
+                container.innerHTML = '';
+                data.forEach(t => {
+                    const div = document.createElement("div");
+                    div.className = "teendo";
+                    div.innerHTML = `
+                        <strong>${t.cim}</strong><br>
+                        ${t.leiras}<br>
+                        <em>${t.elvegzett ? '✅ Elvégezve' : '❌ Még nincs kész'}</em><br>
+                        <button onclick="torol(${t.id})">🗑 Törlés</button>
+                    `;
+                    container.appendChild(div);
+                });
+            });
+    }
+
+    function ujTeendo() {
+        const cim = document.getElementById("cim").value;
+        const leiras = document.getElementById("leiras").value;
+        const elvegzett = document.getElementById("elvegzett").checked;
+
+        fetch(API_URL, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ cim, leiras, elvegzett })
+        }).then(() => {
+            document.getElementById("cim").value = '';
+            document.getElementById("leiras").value = '';
+            document.getElementById("elvegzett").checked = false;
+            betoltTeendok();
+        });
+    }
+
+    function torol(id) {
+        fetch(`${API_URL}/${id}`, { method: 'DELETE' })
+            .then(() => betoltTeendok());
+    }
+
+    betoltTeendok();
+</script>
+</body>
+</html>
